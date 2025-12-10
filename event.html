@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .event-section {
+      background: linear-gradient(90deg, #3498db 70%, #6dd5fa 100%);
+      color: white;
+      padding: 50px 20px 30px 20px;
+      border-radius: 0 0 30px 30px;
+      box-shadow: 0 8px 24px rgba(52,152,219,0.10);
+    }
+    .event-section h2 {
+      font-size: 36px;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+    .event-section p {
+      font-size: 18px;
+      max-width: 800px;
+      margin: 0 auto 20px auto;
+      line-height: 1.6;
+    }
+    .search-bar {
+      margin: 20px auto 0 auto;
+      max-width: 350px;
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(52,152,219,0.08);
+      padding: 6px 14px;
+      gap: 8px;
+    }
+    .search-bar input {
+      border: none;
+      outline: none;
+      font-size: 1em;
+      flex: 1;
+      background: transparent;
+      padding: 7px 0;
+    }
+    .search-bar button {
+      background: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      font-size: 1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .search-bar button:hover {
+      background: #2980b9;
+    }
+    .event-box {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 30px;
+      min-height: 180px;
+    }
+    .box {
+      background: white;
+      color: #3498db;
+      width: 260px;
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      font-size: 18px;
+      border-radius: 14px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.10);
+      padding: 18px 20px 18px 20px;
+      text-align: left;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      position: relative;
+      border-left: 6px solid #3498db;
+    }
+    .box:hover {
+      background: #3498db;
+      color: white;
+      box-shadow: 0 8px 24px rgba(52,152,219,0.18);
+      border-left: 6px solid #fff;
+    }
+    .box-title {
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-bottom: 8px;
+    }
+    .box-desc {
+      font-size: 0.97em;
+      margin-bottom: 12px;
+      color: #555;
+    }
+    .box:hover .box-desc {
+      color: #e0e0e0;
+    }
+    .box-link {
+      color: #3498db;
+      text-decoration: underline;
+      font-size: 0.98em;
+      font-weight: 500;
+    }
+    .box:hover .box-link {
+      color: #fff;
+    }
+    .add-event-btn {
+      background: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 30px 0 0 0;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(76,175,80,0.10);
+    }
+    .add-event-btn:hover {
+      background: #388e3c;
+    }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.3);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 28px 20px 18px 20px;
+      border-radius: 10px;
+      width: 95%;
+      max-width: 340px;
+      text-align: left;
+      color: #222;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(52,152,219,0.18);
+    }
+    .close-modal {
+      position: absolute;
+      top: 10px; right: 16px;
+      font-size: 1.2em;
+      cursor: pointer;
+      color: #3498db;
+      background: none;
+      border: none;
+    }
+    .modal-content input, .modal-content textarea {
+      width: 100%;
+      margin: 10px 0 16px 0;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #b3c6e0;
+      font-size: 1em;
+      background: #f7fbff;
+      font-family: Arial, sans-serif;
+    }
+    .modal-content button {
+      background: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 10px 0;
+      width: 100%;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 5px;
+      transition: background 0.2s;
+    }
+    .modal-content button:hover {
+      background: #2980b9;
+    }
+    /* Responsive */
+    @media (max-width: 700px) {
+      .event-box { flex-direction: column; gap: 14px; }
+      .box { width: 95%; min-height: 110px; }
+      .event-section { padding: 30px 5px 15px 5px; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="event-section">
+    <h2>Event Management</h2>
+    <p>
+      Our platform organizes online and offline events that help alumni reconnect with the college and engage in network-building workshops, webinars, and reunions. Stay connected and participate from anywhere!
+    </p>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search events..." oninput="filterEvents()">
+      <button title="Search" onclick="filterEvents()">🔍</button>
+    </div>
+    <div class="event-box" id="eventBox">
+      <!-- Event cards will be rendered here -->
+    </div>
+    <button class="add-event-btn" onclick="openAddEventModal()">+ Add Event</button>
+  </section>
+
+  <h2 style="margin-top:40px;">Welcome to Alumni Event Portal</h2>
+  <button style="margin-bottom:40px;"><a href="event_detail.html" style="color:white;text-decoration:none;">Conduct Event</a></button>
+
+  <!-- Add Event Modal -->
+  <div class="modal" id="addEventModal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeAddEventModal()">&times;</button>
+      <h3>Add New Event</h3>
+      <form id="addEventForm" onsubmit="addEvent(event)">
+        <input type="text" id="eventTitle" placeholder="Event Title" required>
+        <input type="text" id="eventLink" placeholder="Event Link (e.g. onlinewebminar.html)" required>
+        <textarea id="eventDesc" placeholder="Short Description" rows="2" required></textarea>
+        <button type="submit">Add Event</button>
+      </form>
+    </div>
+  </div>
+
+  <footer style="text-align:center; margin: 40px 0 20px 0; color:#888;">
+    <a href="index.html" style="color:#3498db; text-decoration:none; font-weight:600;">← Back to Home</a>
+  </footer>
+
+  <script>
+    // Event data
+    const events = [
+      {
+        title: "Online Webinars",
+        link: "onlinewebminar.html",
+        desc: "Join live webinars hosted by alumni and industry experts. Participate from anywhere!"
+      },
+      {
+        title: "Offline Reunions",
+        link: "offlinereunion.html",
+        desc: "Reconnect with your batchmates and relive memories at our offline reunions."
+      },
+      {
+        title: "Networking Workshops",
+        link: "networking workshop.html",
+        desc: "Grow your professional network and skills with interactive workshops."
+      },
+      {
+        title: "Expert Talks",
+        link: "industryinsight.html",
+        desc: "Hear from industry leaders and alumni on trending topics and career advice."
+      }
+    ];
+
+    // Render events
+    function renderEvents(filter = "") {
+      const box = document.getElementById('eventBox');
+      box.innerHTML = "";
+      let filtered = events.filter(ev => ev.title.toLowerCase().includes(filter.toLowerCase()));
+      if (filtered.length === 0) {
+        box.innerHTML = `<div style="color:#888; font-size:1.1em; margin:30px auto;">No events found.</div>`;
+        return;
+      }
+      filtered.forEach((ev) => {
+        const card = document.createElement('div');
+        card.className = "box";
+        card.innerHTML = `
+          <div class="box-title">${ev.title}</div>
+          <div class="box-desc">${ev.desc}</div>
+          <a class="box-link" href="${ev.link}" target="_blank">Go to Event Page</a>
+        `;
+        box.appendChild(card);
+      });
+    }
+
+    // Search/filter
+    function filterEvents() {
+      const val = document.getElementById('searchInput').value;
+      renderEvents(val);
+    }
+
+    // Add Event Modal
+    function openAddEventModal() {
+      document.getElementById('addEventModal').style.display = 'flex';
+      document.getElementById('addEventForm').reset();
+    }
+    function closeAddEventModal() {
+      document.getElementById('addEventModal').style.display = 'none';
+    }
+    function addEvent(e) {
+      e.preventDefault();
+      const title = document.getElementById('eventTitle').value.trim();
+      const link = document.getElementById('eventLink').value.trim();
+      const desc = document.getElementById('eventDesc').value.trim();
+      events.push({ title, link, desc });
+      closeAddEventModal();
+      renderEvents(document.getElementById('searchInput').value);
+    }
+    // Close modal on outside click
+    window.onclick = function(event) {
+      const addModal = document.getElementById('addEventModal');
+      if (event.target === addModal) closeAddEventModal();
+    };
+
+    // Initial render
+    renderEvents();

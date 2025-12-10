@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Alumni Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .log_cont {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      width: 300px;
+    }
+
+    .log_cont h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    .log_cont input[type="text"],
+    .log_cont input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .log_cont input[type="submit"] {
+      width: 100%;
+      background: #3498db;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .log_cont input[type="submit"]:hover {
+      background: #2980b9;
+    }
+
+    .log_cont a {
+      display: block;
+      text-align: center;
+      margin-top: 12px;
+      text-decoration: none;
+      color: #3498db;
+    }
+
+    .log_cont a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="log_cont">
+    <h2>Alumni Login</h2>
+    <form action="alumni-dashboard.html" id="login">
+      <input type="text" name="username" placeholder="Enter your name" id="name">
+      <label for="year">Select Year:</label>
+        <select id="year" name="year">
+            <option value="">--choose your passout Year--</option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2023</option>
+            <option value="2019">2024</option>
+            <option value="2020">2025</option>
+            <option value="2021">2023</option>
+            <option value="2022">2024</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+        </select>
+        <br><br>
+      <input type="submit" value="donate">
+    </form>
+    <a href="index.html">Back to Home</a>
+  </div>
+
+</body>
+
+<script>
+
+    document.getElementById("login").addEventListener("submit",function(e)
+    {
+        e.preventDefault()
+        const name=document.getElementById("name").value
+        const year=document.getElementById("year").value
+
+    
+        if(name==="abcd" && year==="2025"){
+    let scholarship = localStorage.getItem("scholarshipType");
+
+        if (scholarship === "merit") {
+        window.location.href = "merit_list.html";
+        } else if (scholarship === "need") {
+        window.location.href = "need_page.html";
+        } else if (scholarship === "specialized") {
+        window.location.href = "specialized.html";
+        }
+    }
+    else{
+        alert("wrong password");
+    }
+
+});
+</script>
+</html>

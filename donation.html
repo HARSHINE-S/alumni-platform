@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scholarship Selection</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+    }
+    .container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0px 10px 25px rgba(0,0,0,0.2);
+      width: 350px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 12px 0;
+      padding: 10px;
+      border: 2px solid transparent;
+      border-radius: 12px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .option:hover {
+      border: 2px solid #2575fc;
+      background: #f0f7ff;
+    }
+    input[type="radio"] {
+      accent-color: #2575fc;
+      transform: scale(1.2);
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(135deg, #2575fc, #6a11cb);
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🎓 Select Scholarship Type</h2>
+    <form id="type">
+      <label class="option">
+        <input type="radio" name="scholarship" value="merit">
+        🌟 Merit-Based
+      </label>
+      <label class="option">
+        <input type="radio" name="scholarship" value="need">
+        💰 Need-Based
+      </label>
+      <label class="option">
+        <input type="radio" name="scholarship" value="specialized">
+        🎯 Specialized
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("type").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const select = document.querySelector('input[name="scholarship"]:checked');
+      if (!select) {
+        alert(" Please select a scholarship type!");
+        return;
+      }
+
+   
+      localStorage.setItem("scholarshipType", select.value);
+
+
+      window.location.href = "alumni_detail.html"; 
+    });
+  </script>
+</body>
+</html>
+
+

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Countdown</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0077b6, #00b4d8);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .event-box {
+      text-align: center;
+      padding: 25px 40px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
+      backdrop-filter: blur(8px);
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+    #countdown {
+      margin-top: 15px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #ffdd00;
+    }
+    .set-box {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 15px 20px;
+      border-radius: 12px;
+    }
+    input, button {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+    }
+    button {
+      background: #ffdd00;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #ffd60a;
+    }
+  </style>
+</head>
+<body>
+  <div class="event-box">
+    <h1>🎉 Alumni Event 🎉</h1>
+    <div id="event-info">No event set yet</div>
+    <div id="countdown">⏳ Waiting for event...</div>
+  </div>
+
+  <div class="set-box">
+    <p><strong>Set Event Date & Time:</strong></p>
+    <input type="datetime-local" id="eventDateInput">
+    <br>
+    <button onclick="setEvent()">Save Event</button>
+  </div>
+
+  <script>
+    let eventDate;
+    const eventInfo = document.getElementById("event-info");
+    const countdown = document.getElementById("countdown");
+
+    function setEvent() {
+      const inputVal = document.getElementById("eventDateInput").value;
+      if (!inputVal) {
+        alert("Please select a date and time!");
+        return;
+      }
+      eventDate = new Date(inputVal).getTime();
+      eventInfo.innerHTML = <strong>Event Date:</strong> ${new Date(inputVal).toLocaleString()};
+      updateCountdown();
+    }
+
+    function updateCountdown() {
+      setInterval(() => {
+        if (!eventDate) return;
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+
+        if (distance < 0) {
+          countdown.innerHTML = "✅ Event Started!";
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countdown.innerHTML = ⏳ ${days}d ${hours}h ${minutes}m ${seconds}s;
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
