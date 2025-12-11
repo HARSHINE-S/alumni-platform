@@ -9,4 +9,5 @@ By combining financial support with professional networking, this platform creat
 - **Harshine** – @HARSHINE-S  
 - **Jerismary** – @JERISMARY
 - ***Maha* – @MAHA1302
-💛 **Big thanks to all the contributors who made this project possible!**
+- 
+  **Big thanks to all the contributors who made this project possible!**
